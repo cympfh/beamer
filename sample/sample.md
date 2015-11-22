@@ -32,3 +32,32 @@ easiness    50\%  90\%
 \flushright
 Write Markdown!
 
+# IsPrime?
+
+## Scheme
+
+```scheme
+(define (isprime? n)
+  (let loop ((i 2))
+    (if (= i n) #t
+      (if (zero? (modulo n i)) #f
+        (loop (+ i 1))))))
+```
+
+## The Others
+
+### Haskell
+
+```haskell
+isPrime :: Int -> Bool
+isPrime n = any (\i -> n`mod`i==0) [2 .. n-1]
+```
+
+### Bash
+
+```bash
+isprime() {
+  [ $(factor $1 | awk '{print NF}') == 2 ]
+}
+```
+
