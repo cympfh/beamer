@@ -7,20 +7,34 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, cite, url}
+\usepackage{etex}
+\usepackage{mathpazo}
+\usepackage{longtable}
+
+\def\emph#1{\alert{#1}}
+
+% pause
+% \setbeamercovered{dynamic}
+
 % define colours
 % taken from pickton on Adobe Kuler:
-% https://kuler.adobe.com/Some-Kind-Of-Execushares-color-theme-3837185/
-\definecolor{ExecusharesRed}{RGB}{230,37,52}
-\definecolor{ExecusharesBlack}{RGB}{43,40,40}
-\definecolor{ExecusharesBlue}{RGB}{22,190,207}
-\definecolor{ExecusharesWhite}{RGB}{255,255,243}
-\definecolor{ExecusharesGrey}{RGB}{107,110,108}
+% https://kuler.adobe.com/Some-Kind-Of-Ponde-color-theme-3837185/
+\definecolor{PondeRed}{RGB}{230,37,52}
+\definecolor{PondeWine}{RGB}{230,3,5}
+\definecolor{PondeBlack}{RGB}{43,40,40}
+\definecolor{PondeBlue}{RGB}{22,190,207}
+\definecolor{PondeWhite}{RGB}{255,255,243}
+\definecolor{PondeGrey}{RGB}{107,110,108}
 
 % set colours
-\setbeamercolor{itemize item}{fg=ExecusharesBlue}
-\setbeamercolor{enumerate item}{fg=ExecusharesBlue}
-\setbeamercolor{alerted text}{fg=ExecusharesBlue}
-\setbeamercolor{section in toc}{fg=ExecusharesBlack}
+\setbeamercolor{itemize item}{fg=PondeRed}
+\setbeamercolor{enumerate item}{fg=PondeRed}
+\setbeamercolor{alerted text}{fg=PondeBlue}
+\setbeamercolor{section in toc}{fg=PondeBlack}
 
 % set fonts
 \setbeamerfont{itemize/enumerate body}{size=\large}
@@ -30,17 +44,17 @@
 % make the itemize bullets pixelated >
 \setbeamertemplate{itemize item}{
   \tikz{
-    \draw[fill=ExecusharesBlue,draw=none] (0, 0) rectangle(0.1, 0.1);
-    \draw[fill=ExecusharesBlue,draw=none] (0.1, 0.1) rectangle(0.2, 0.2);
-    \draw[fill=ExecusharesBlue,draw=none] (0, 0.2) rectangle(0.1, 0.3);
+    \draw[fill=PondeWine,draw=none] (0, 0) rectangle(0.1, 0.1);
+    \draw[fill=PondeWine,draw=none] (0.1, 0.1) rectangle(0.2, 0.2);
+    \draw[fill=PondeWine,draw=none] (0, 0.2) rectangle(0.1, 0.3);
   }
 }
 % make the subitems also pixelated >, but a little smaller and red
 \setbeamertemplate{itemize subitem}{
   \tikz{
-    \draw[fill=ExecusharesRed,draw=none] (0, 0) rectangle(0.075, 0.075);
-    \draw[fill=ExecusharesRed,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
-    \draw[fill=ExecusharesRed,draw=none] (0, 0.15) rectangle(0.075, 0.225);
+    \draw[fill=PondeRed,draw=none] (0, 0) rectangle(0.075, 0.075);
+    \draw[fill=PondeRed,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
+    \draw[fill=PondeRed,draw=none] (0, 0.15) rectangle(0.075, 0.225);
   }
 }
 
@@ -94,8 +108,6 @@
   % (calculate where it should go)
   \progressbar@tmpcounta=\insertframenumber
   \progressbar@tmpcountb=\inserttotalframenumber
-  % \advance\progressbar@tmpcounta by -1
-  % \advance\progressbar@tmpcountb by -1
   \progressbar@tmpdim=\progressbar@pbwidth
   \multiply\progressbar@tmpdim by \progressbar@tmpcounta
   \divide\progressbar@tmpdim by \progressbar@tmpcountb
@@ -105,64 +117,52 @@
     \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
 
     % the background
-    \fill[color=ExecusharesWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+    \fill[color=PondeWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
 
-    % separate the drawing based on if we're the first (title) slide or not
-    \ifnum\thepage=1\relax
-      % the title page
-      % draw the fills
-      \fill[color=ExecusharesRed] (0, 4cm) rectangle(\slidewidth,\slideheight);
+    \ifnum\thepage=1\relax % title page
+      \fill[color=PondeRed] (0, \slideheight-8mm) rectangle(\slidewidth,\slideheight);
+      \fill[color=PondeBlack] (0, \slideheight-4mm) rectangle(\slidewidth,\slideheight);
 
-      % draw the actual text
-      \node[anchor=south,text width=\slidewidth-1cm,inner xsep=0.5cm] at (0.5\slidewidth,4cm) {\color{ExecusharesWhite}\Huge\textbf{\inserttitle}};
-      \node[anchor=north east,text width=\slidewidth-1cm,align=right] at (\slidewidth-0.4cm,4cm) {\color{ExecusharesBlack}\tiny\insertsubtitle};
-      \node[above] at(0.5\slidewidth,2.3cm) {\color{ExecusharesBlack}\tiny by};
-      \node at (0.5\slidewidth,2cm) {\color{ExecusharesBlack}\LARGE\insertauthor};
+      \node[anchor=south,text width=\slidewidth-1cm,inner xsep=0.5cm] at (0.5\slidewidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
+      \node[anchor=west,inner xsep=0.5cm] at (0,2cm) {\color{PondeBlack}\LARGE\insertauthor};
+      \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertdate};
 
-      % add the date in the corner
-      \node[anchor=south east] at(\slidewidth,0cm) {\color{ExecusharesGrey}\tiny\insertdate};
-    \else
-      % NOT the title page
-      % title bar
-      \fill[color=ExecusharesRed] (0, \slideheight-1cm) rectangle(\slidewidth,\slideheight);
+    \else % inner page
+      % header
+      \fill[color=PondeRed] (0, \slideheight-12mm) rectangle(\slidewidth,\slideheight);
 
-      % swap the comment on these to add section titles to slide titles
-      %\node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm] at (6.4cm,9.6cm) {\color{ExecusharesWhite}\Large\textbf{\insertsectionhead: \insertframetitle}};
-      \node[anchor=north,text width=\slidewidth-1cm,inner xsep=0.5cm,inner ysep=0.25cm] at (0.5\slidewidth,\slideheight) {\color{ExecusharesWhite}\huge\textbf{\insertframetitle}};
+      \node[anchor=north east]at(\slidewidth,\slideheight){\color{PondeBlack}\scriptsize\insertsection};
+      \node[anchor=north west,inner ysep=0.5mm]at(5mm,\slideheight-3.9mm){\color{PondeWhite}\LARGE\textbf{\insertframetitle}};
       
       % if we're showing a progress bar, show it
       % (I disable the progress bar and slide numbers for the "Appendix" slides)
-      \ifnum \value{showProgressBar}>0\relax%
+      \ifnum \value{showProgressBar}>0\relax
         % the the progress bar icon in the middle of the screen
-        \draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
-        \draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
+        \draw[fill=PondeGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
+        \draw[fill=PondeRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
 
-        % bottom information
-        \node[anchor=south west] at(0cm,0.25cm) {\color{ExecusharesGrey}\tiny\insertsection};
         % if slide numbers are active
         \ifnum \value{showSlideNumbers}>0\relax%
           % if slide totals are active
           \ifnum \value{showSlideTotal}>0\relax%
             % draw both slide number and slide total
-            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{ExecusharesGrey}\tiny\insertframenumber/\inserttotalframenumber};
+            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{PondeBlack}\tiny\insertframenumber/\inserttotalframenumber};
           \else
             % slide totals aren't active, don't draw them
-            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{ExecusharesGrey}\tiny\insertframenumber};
+            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{PondeBlack}\tiny\insertframenumber};
           \fi
         \fi
       % don't show the progress bar?
       \else
-        % section title in the bottom left
-        \node[anchor=south west] at(0cm,0cm) {\color{ExecusharesGrey}\tiny\insertsection};
         % if we're showing slide numbers
         \ifnum \value{showSlideNumbers}>0\relax%
           % if slide totals are active
           \ifnum \value{showSlideTotal}>0\relax%
             % draw both slide number and slide total
-            \node[anchor=south east] at(\slidewidth,0cm) {\color{ExecusharesGrey}\tiny\insertframenumber/\inserttotalframenumber};
+            \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertframenumber/\inserttotalframenumber};
           \else
             % slide totals aren't active, don't draw them
-            \node[anchor=south east] at(\slidewidth,0cm) {\color{ExecusharesGrey}\tiny\insertframenumber};
+            \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertframenumber};
           \fi
         \fi
       \fi
@@ -178,10 +178,10 @@
   \begin{tikzpicture}
     % set up the entire slide as the canvas
     \useasboundingbox (0,0) rectangle(\slidewidth,\slideheight);
-    %\fill[color=ExecusharesWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-    \fill[color=ExecusharesWhite] (-1cm, 2cm) rectangle (\slidewidth, \slideheight+0.1cm);
-    \fill[color=ExecusharesRed] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
-    \node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{ExecusharesWhite}\Huge\textbf{\insertsection}};
+    %\fill[color=PondeWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+    \fill[color=PondeWhite] (-1cm, 2cm) rectangle (\slidewidth, \slideheight+0.1cm);
+    \fill[color=PondeRed] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
+    \node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{PondeWhite}\Huge\textbf{\insertsection}};
   \end{tikzpicture}
 }
 

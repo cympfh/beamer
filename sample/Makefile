@@ -1,14 +1,7 @@
-all: default.pdf antibes.beaver.pdf ponde.pdf Execushares.pdf
+all: default.pdf antibes.beaver.pdf ponde.pdf ponde2.pdf Execushares.pdf
 
-Execushares.pdf: sample.md
-	pandoc -s -t beamer --template ../themes/Execushares.tex -o tmp.tex sample.md
-	platex -shell-escape tmp.tex
-	platex -shell-escape tmp.tex
-	dvipdfmx tmp
-	mv tmp.pdf $@
-
-ponde.pdf: sample.md
-	pandoc -s -t beamer --template ../themes/ponde.tex -o tmp.tex sample.md
+%.pdf: ../themes/%.tex
+	pandoc -s -t beamer --template $^ -o tmp.tex sample.md
 	platex -shell-escape tmp.tex
 	platex -shell-escape tmp.tex
 	dvipdfmx tmp

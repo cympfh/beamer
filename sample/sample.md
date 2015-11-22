@@ -5,8 +5,9 @@
 # Introduction
 ## What is Beamer?
 
-- LaTeX class
+- a LaTeX class
 - You can write a cool presentation slide
+    - like this
 
 # Method
 ## Method (\LaTeX)
@@ -18,7 +19,7 @@
 
 1. Prepare LaTeX Template
 1. Write a Markdown
-1. Compile with pandoc!
+1. Compile with *pandoc*!
 
 # Result
 ## Result
@@ -27,6 +28,7 @@
 -------- ------- -----
 easiness    50\%  90\%
 
+\vspace*{10mm}
 \flushright
 Write Markdown!
 
