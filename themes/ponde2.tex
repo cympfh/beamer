@@ -38,7 +38,7 @@
 \setbeamercolor{section in toc}{fg=PondeBlack}
 
 % set fonts
-\setbeamerfont{itemize/enumerate body}{size=\large}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subsubbody}{size=\small}
 
@@ -130,10 +130,9 @@
 
     \else % inner page
       % header
-      \fill[color=PondeRed] (0, \slideheight-12mm) rectangle(\slidewidth,\slideheight);
-
+      \fill[color=PondeRed] (0, \slideheight-10mm) rectangle(\slidewidth,\slideheight);
       \node[anchor=north east]at(\slidewidth,\slideheight){\color{PondeBlack}\scriptsize\insertsection};
-      \node[anchor=north west,inner ysep=0.5mm]at(5mm,\slideheight-3.9mm){\color{PondeWhite}\LARGE\textbf{\insertframetitle}};
+      \node[anchor=north west,inner ysep=0.5mm]at(5mm,\slideheight-1.5mm){\color{PondeWhite}\LARGE\textbf{\insertframetitle}};
       
       % if we're showing a progress bar, show it
       % (I disable the progress bar and slide numbers for the "Appendix" slides)
