@@ -1,40 +1,48 @@
 \documentclass[professionalfont, 12pt, dvipdfmx, default, cjk]{beamer}
+% \usetheme{Antibes}
+% \usecolortheme{beaver}
 
-% the various libraries we will be using
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage[none]{hyphenat}
 \usepackage{longtable}
 \usepackage{booktabs}
-
-\renewcommand{\kanjifamilydefault}{\gtdefault}
-\mathversion{bold}
 \usepackage{graphicx}
 \usepackage{amsmath, amssymb, cite, url}
 \usepackage{etex}
-\usepackage{mathpazo}
 \usepackage{longtable}
 
-\def\emph#1{\alert{#1}}
+\setbeamercovered{dynamic} % slightly displaying not highlight
 
-% pause
-% \setbeamercovered{dynamic}
+% font
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+\usepackage{mathpazo}
+
+\makeatletter
+\def\Hline{%
+  \noalign{\ifnum0=`}\fi\hrule \@height 0.8pt \futurelet
+\reserved@a\@xhline}
+\makeatother
+
+\def\emph#1{\alert{#1}}
 
 % define colours
 % taken from pickton on Adobe Kuler:
 % https://kuler.adobe.com/Some-Kind-Of-Ponde-color-theme-3837185/
 \definecolor{PondeRed}{RGB}{230,37,52}
 \definecolor{PondeWine}{RGB}{230,3,5}
+\definecolor{PondePink}{RGB}{230,64,104}
 \definecolor{PondeBlack}{RGB}{43,40,40}
 \definecolor{PondeBlue}{RGB}{22,190,207}
 \definecolor{PondeWhite}{RGB}{255,255,243}
-\definecolor{PondeGrey}{RGB}{107,110,108}
+\definecolor{PondeGray}{RGB}{107,110,108}
 
 % set colours
 \setbeamercolor{structure}{fg=PondeRed}
 \setbeamercolor{itemize item}{fg=PondeRed}
 \setbeamercolor{enumerate item}{fg=PondeRed}
-\setbeamercolor{alerted text}{fg=PondeBlue}
+\setbeamercolor{alerted text}{fg=PondeWine}
 \setbeamercolor{section in toc}{fg=PondeBlack}
 
 % set fonts
@@ -42,7 +50,7 @@
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subsubbody}{size=\small}
 
-% make the itemize bullets pixelated >
+% item bullet
 \setbeamertemplate{itemize item}{
   \tikz{
     \draw[fill=PondeWine,draw=none] (0, 0) rectangle(0.1, 0.1);
@@ -50,7 +58,6 @@
     \draw[fill=PondeWine,draw=none] (0, 0.2) rectangle(0.1, 0.3);
   }
 }
-% make the subitems also pixelated >, but a little smaller and red
 \setbeamertemplate{itemize subitem}{
   \tikz{
     \draw[fill=PondeRed,draw=none] (0, 0) rectangle(0.075, 0.075);
@@ -58,137 +65,143 @@
     \draw[fill=PondeRed,draw=none] (0, 0.15) rectangle(0.075, 0.225);
   }
 }
+\setbeamertemplate{itemize subsubitem}{
+  \tikz{
+    \draw[fill=PondePink,draw=none] (0, 0) rectangle(0.075, 0.075);
+    \draw[fill=PondePink,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
+    \draw[fill=PondePink,draw=none] (0, 0.15) rectangle(0.075, 0.225);
+  }
+}
 
-% disable navigation
-\setbeamertemplate{navigation symbols}{}
-
-% custom draw the title page above
+% title and background
 \setbeamertemplate{title page}{}
-
-% again, manually draw the frame title above
-\setbeamertemplate{frametitle}{}
-
-% disable "Figure:" in the captions
-\setbeamertemplate{caption}{\tiny\insertcaption}
-\setbeamertemplate{caption label separator}{}
-
-% since I don't know a better way to do this, these are all switches
-% doing `\setcounter{showProgressBar}{0}` will turn the progress bar off (I turn it off for Appendix slides)
-% etc
-\newcounter{showProgressBar}
-\setcounter{showProgressBar}{1}
-\newcounter{showSlideNumbers}
-\setcounter{showSlideNumbers}{1}
-\newcounter{showSlideTotal}
-\setcounter{showSlideTotal}{1}
-
-% use \makeatletter for our progress bar definitions
-% progress bar idea from http://tex.stackexchange.com/a/59749/44221
-% slightly adapted for visual purposes here
-\makeatletter
-\newcount\progressbar@tmpcounta% auxiliary counter
-\newcount\progressbar@tmpcountb% auxiliary counter
-\newdimen\progressbar@pbwidth %progressbar width
-\newdimen\progressbar@tmpdim % auxiliary dimension
-
-\newdimen\slidewidth % auxiliary dimension
-\newdimen\slideheight % auxiliary dimension
-
-% make the progress bar go across the screen
-%\progressbar@pbwidth=12.8cm
-\progressbar@pbwidth=\the\paperwidth
-\slidewidth=\the\paperwidth
-\slideheight=\the\paperheight
-
-% use tikz to draw everything
-% it may not be the best, but it's easy to work with
-% and looks good
-% TODO: base title slide and contents slide on something other than slide numbers :/
 \setbeamertemplate{background}{
-  % deal with progress bar stuff
-  % (calculate where it should go)
-  \progressbar@tmpcounta=\insertframenumber
-  \progressbar@tmpcountb=\inserttotalframenumber
-  \progressbar@tmpdim=\progressbar@pbwidth
-  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-  \divide\progressbar@tmpdim by \progressbar@tmpcountb
-
   \begin{tikzpicture}
-    % set up the entire slide as the canvas
-    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+    \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
 
-    % the background
+    % background (solid=White)
     \fill[color=PondeWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
 
-    \ifnum\thepage=1\relax % title page
-      \fill[color=PondeRed] (0, \slideheight-8mm) rectangle(\slidewidth,\slideheight);
-      \fill[color=PondeBlack] (0, \slideheight-4mm) rectangle(\slidewidth,\slideheight);
-
-      \node[anchor=south,text width=\slidewidth-1cm,inner xsep=0.5cm] at (0.5\slidewidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
+    % draw title page as background
+    \ifnum\thepage=1\relax
+      \fill[color=PondeRed] (0, \paperheight-8mm) rectangle(\paperwidth,\paperheight);
+      \fill[color=PondeBlack] (0, \paperheight-4mm) rectangle(\paperwidth,\paperheight);
+      \node[anchor=south,text width=\paperwidth-1cm,inner xsep=0.5cm] at (0.5\paperwidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
       \node[anchor=west,inner xsep=0.5cm] at (0,2cm) {\color{PondeBlack}\LARGE\insertauthor};
-      \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertdate};
-
-    \else % inner page
-      % header
-      \fill[color=PondeRed] (0, \slideheight-10mm) rectangle(\slidewidth,\slideheight);
-      \node[anchor=north east]at(\slidewidth,\slideheight){\color{PondeBlack}\scriptsize\insertsection};
-      \node[anchor=north west,inner ysep=0.5mm]at(5mm,\slideheight-1.5mm){\color{PondeWhite}\LARGE\textbf{\insertframetitle}};
-      
-      % if we're showing a progress bar, show it
-      % (I disable the progress bar and slide numbers for the "Appendix" slides)
-      \ifnum \value{showProgressBar}>0\relax
-        % the the progress bar icon in the middle of the screen
-        \draw[fill=PondeGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
-        \draw[fill=PondeRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
-
-        % if slide numbers are active
-        \ifnum \value{showSlideNumbers}>0\relax%
-          % if slide totals are active
-          \ifnum \value{showSlideTotal}>0\relax%
-            % draw both slide number and slide total
-            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{PondeBlack}\tiny\insertframenumber/\inserttotalframenumber};
-          \else
-            % slide totals aren't active, don't draw them
-            \node[anchor=south east] at(\slidewidth,0.25cm) {\color{PondeBlack}\tiny\insertframenumber};
-          \fi
-        \fi
-      % don't show the progress bar?
-      \else
-        % if we're showing slide numbers
-        \ifnum \value{showSlideNumbers}>0\relax%
-          % if slide totals are active
-          \ifnum \value{showSlideTotal}>0\relax%
-            % draw both slide number and slide total
-            \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertframenumber/\inserttotalframenumber};
-          \else
-            % slide totals aren't active, don't draw them
-            \node[anchor=south east] at(\slidewidth,0cm) {\color{PondeGrey}\tiny\insertframenumber};
-          \fi
-        \fi
-      \fi
+      \node[anchor=south east] at(\paperwidth,0cm) {\color{PondeGray}\tiny\insertdate};
     \fi
   \end{tikzpicture}
 }
-\makeatother
 
-% add section titles
-\AtBeginSection{\frame{\sectionpage}}
-\setbeamertemplate{section page}
+% header
+\makeatletter
+\setbeamertemplate{headline}{}
+\setbeamercolor{frametitle}{fg=PondeWhite,bg=PondeRed}
+\setbeamertemplate{frametitle}
 {
-  \begin{tikzpicture}
-    % set up the entire slide as the canvas
-    \useasboundingbox (0,0) rectangle(\slidewidth,\slideheight);
-    %\fill[color=PondeWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-    \fill[color=PondeWhite] (-1cm, 2cm) rectangle (\slidewidth, \slideheight+0.1cm);
-    \fill[color=PondeRed] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
-    \node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{PondeWhite}\Huge\textbf{\insertsection}};
-  \end{tikzpicture}
+  \vspace*{-1mm}
+  \begin{beamercolorbox}[sep=2mm,wd=1.01\paperwidth]{frametitle}
+    \hfill \tiny \insertsectionhead \par
+    \vspace*{-2mm} \Large \strut\insertframetitle\strut
+  \end{beamercolorbox}
 }
 
-% source code syntax highlight
+\makeatother
+
+% footer is progress bar
+\makeatother
+\setbeamertemplate{footline}
+{
+  \dimen0=1.1\paperwidth
+  \newcount\p
+  \newcount\q
+  \p=\insertframenumber
+  \q=\inserttotalframenumber
+  \advance\p by -1
+  \advance\q by -1
+  \ifnum\q=0
+    \q=1
+  \fi
+  \multiply\dimen0 by \the\p
+  \divide\dimen0 by \the \q
+  \edef\progressbarwidth{\the\dimen0}
+  \leavevmode%
+  \setbeamercolor{progress outer}{fg=white, bg=PondeGray}
+  \setbeamercolor{progress bar}{bg=PondeRed}
+  \begin{beamercolorbox}[wd=1.1\paperwidth,ht=0.25ex,dp=1ex]{progress outer}
+    \begin{beamercolorbox}[wd=\progressbarwidth,ht=0.25ex,dp=1ex]{progress bar}
+    \end{beamercolorbox}%
+  \end{beamercolorbox}%
+}
+\makeatletter
+
+% page number
+\setbeamertemplate{navigation symbols}{
+  \setbeamercolor{footline}{fg=PondeGray}
+  \usebeamerfont{footline}
+  \usebeamercolor[fg]{footline}
+  \ifnum\thepage>1\relax
+    \tiny \insertframenumber / \inserttotalframenumber
+    \hspace{0.2em}
+  \fi
+}
+
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(fancy-enums)$
+\usepackage{enumerate}
+$endif$
+$if(tables)$
+\usepackage{ctable}
+\usepackage{float} % provides the H option for float placement
+$endif$
+% Comment these out if you don't want a slide with just the
+% part/section/subsection/subsubsection title:
+% \AtBeginPart{\frame{\partpage}}
+% \AtBeginSection{\frame{\sectionpage}}
+% \AtBeginSubsection{\frame{\subsectionpage}}
+% \AtBeginSubsubsection{\frame{\subsubsectionpage}}
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+$if(numbersections)$
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(lang)$
+\usepackage[$lang$]{babel}
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 $if(title)$
 \title{$title$}
@@ -200,10 +213,13 @@ $if(date)$
 \date{$date$}
 $endif$
 
+\InputIfFileExists{macro.tex}{}{}
+
 \begin{document}
 $if(title)$
 \frame{\titlepage}
 $endif$
+
 $for(include-before)$
 $include-before$
 
