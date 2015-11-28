@@ -15,7 +15,10 @@ see `sample/*.pdf`
 
 - Ponde
 - Beamer-Theme-Execushares
-    - original style file is [FuzzyWuzzie/Beamer-Theme-Execushares](https://github.com/FuzzyWuzzie/Beamer-Theme-Execushares)
+    - The original style file is [FuzzyWuzzie/Beamer-Theme-Execushares](https://github.com/FuzzyWuzzie/Beamer-Theme-Execushares).
+- Ponde2
+    - color scheme is Execushares (partially)
+    - not dependent as possible as on tikz
 
 # LICENSE
 
