@@ -112,26 +112,6 @@
 \makeatother
 \setbeamertemplate{footline}
 {
-  \dimen0=1.1\paperwidth
-  \newcount\p
-  \newcount\q
-  \p=\insertframenumber
-  \q=\inserttotalframenumber
-  \advance\p by -1
-  \advance\q by -1
-  \ifnum\q=0
-    \q=1
-  \fi
-  \multiply\dimen0 by \the\p
-  \divide\dimen0 by \the \q
-  \edef\progressbarwidth{\the\dimen0}
-  \leavevmode%
-  \setbeamercolor{progress outer}{fg=white, bg=PondeGray}
-  \setbeamercolor{progress bar}{bg=PondeRed}
-  \begin{beamercolorbox}[wd=1.1\paperwidth,ht=0.25ex,dp=1ex]{progress outer}
-    \begin{beamercolorbox}[wd=\progressbarwidth,ht=0.25ex,dp=1ex]{progress bar}
-    \end{beamercolorbox}%
-  \end{beamercolorbox}%
 }
 \makeatletter
 
@@ -153,7 +133,7 @@
       \useasboundingbox (-2.2mm,-2.2mm) rectangle (2.2mm,2.2mm);
       \fill[fill=PondeRed!20] (0,0) circle (2.2mm);
       \fill[fill=PondeRed]
-      (0,0) -- (90:2.2mm) arc (90:90-\p/\q*360:2.2mm) -- cycle;
+      (0,0) -- (90:2.2mm) arc (90:90-\the\p/\the\q*360:2.2mm) -- cycle;
       \fill[fill=white] (0,0) circle [x radius=1.8mm,y radius=1.8mm];
       \node[color=PondeRed,font=\tiny] at (0,0) {\the\p};
     \end{tikzpicture}
