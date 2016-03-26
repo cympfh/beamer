@@ -1,4 +1,4 @@
-all: default.pdf antibes.beaver.pdf ponde.pdf ponde2.pdf Execushares.pdf
+all: default.pdf antibes.beaver.pdf ponde.pdf ponde2.pdf Execushares.pdf ponde3.pdf
 
 %.pdf: ../themes/%.tex
 	pandoc -s -t beamer --template $^ -o tmp.tex sample.md

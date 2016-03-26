@@ -89,6 +89,9 @@
       \node[anchor=south,text width=\paperwidth-1cm,inner xsep=0.5cm] at (0.5\paperwidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
       \node[anchor=west,inner xsep=0.5cm] at (0,2cm) {\color{PondeBlack}\LARGE\insertauthor};
       \node[anchor=south east] at(\paperwidth,0cm) {\color{PondeGray}\tiny\insertdate};
+    % \else
+    %   \node[opacity=0.8, anchor=south east] at (0.95\paperwidth, -0.03\paperheight) {
+    %     \includegraphics[width=0.15\paperwidth,bb=0 0 348 476]{../../bin/img/azusa.png}};
     \fi
   \end{tikzpicture}
 }
@@ -110,9 +113,7 @@
 
 % footer is progress bar
 \makeatother
-\setbeamertemplate{footline}
-{
-}
+\setbeamertemplate{footline}{}
 \makeatletter
 
 % page number
