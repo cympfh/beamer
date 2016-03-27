@@ -1,63 +1,181 @@
-% Sample Slide to write cool presentation Slide
+% How to use this beamer templates
 % @cympfh
 % \today
 
 # Introduction
+
 ## What is Beamer?
 
-- a LaTeX class
-- You can write a cool presentation slide
+- beamer is a \LaTeX class
+- You can write a cool presentation in \TeX
+
     - like this
 
-# Method
-## Method (\LaTeX)
+### A preamble:
 
-1. Write a LaTeX
-1. Compile!
-
-## Our Proposed Method (mkd)
-
-1. Prepare LaTeX Template
-1. Write a Markdown
-1. Compile with *pandoc*!
-
-# Result
-## Result
-
-          \LaTeX   mkd
--------- ------- -----
-easiness    50\%  90\%
-
-\vspace*{10mm}
-\flushright
-Write Markdown!
-
-# IsPrime?
-
-## Scheme
-
-```scheme
-(define (isprime? n)
-  (let loop ((i 2))
-    (if (= i n) #t
-      (if (zero? (modulo n i)) #f
-        (loop (+ i 1))))))
+```tex
+\documentclass[dvipdfmx,default,cjk]{beamer}
 ```
 
-## The Others
+## Presentation Tools
 
-### Haskell
+- PowerPoint (GUI)
+- Keynote (GUI)
+- Beamer (Text)
 
-```haskell
-isPrime :: Int -> Bool
-isPrime n = any (\i -> n`mod`i==0) [2 .. n-1]
-```
+GUI is difficult.
+Writing \TeX is also difficult.
 
-### Bash
+Find more convinient tools!
+
+## Use Pandoc
+
+Pandoc - [pandoc.org](http://pandoc.org/)
+
+is a *document* $\mapsto$ *document* convert tool
+
+- many document formats are supported!!
+    1. `.mkd` (markdown)
+    1. `.html` `.xml`
+    1. `.docx` (Microsoft Words)
+    1. `.tex` `.pdf`
+    1. and more
+- *template* is used for convert
+    - pandoc has many templates for many formats
+    - you can custom and use your own templates
+
+## Example
+
+### a document `.tex` from `.mkd`
+
+Pandoc use usual **template** for `.tex`.
+The formats of input and output are inferred from the file extensions.
 
 ```bash
-isprime() {
-  [ $(factor $1 | awk '{print NF}') == 2 ]
-}
+pandoc -o report.tex report.mkd
 ```
+
+### a slide `.tex` from `.mkd`
+
+specify the output format as `beamer`
+
+```bash
+pandoc -t beamer -o report.tex report.mkd
+```
+
+# Method
+
+## My Way to Write Presentation Slides
+
+1. write `.mkd`
+2. get `beamer` file by `pandoc`
+
+```bash
+pandoc -s -t beamer \
+  --template ./themes/pondering.tex \
+  -o out.tex in.mkd
+```
+
+(also see `Makefile`)
+
+3. compile with `platex` and get `.pdf`
+
+```bash
+platex out
+dvipdfmx out
+zathura out.pdf
+```
+
+# Check the Template
+
+## enumerate and itemize
+
+1. one
+1. two
+    - 2
+    - 弐
+1. three
+
+- itemize
+    - subitemize
+        - subsubitemize
+        - subsubitemize
+- itemize
+- itemize
+
+## Block
+
+In mkd, a `###` makes a `block`
+
+### block title
+
+block inner
+
+### block title
+
+block inner
+
+## code highlight
+
+```bash
+seq 1 100 | factor | awk 'NF==2{print $2}'
+```
+
+```haskell
+main :: IO ()
+```
+
+```python
+if __name__ == "__main__":
+  pass
+```
+
+## embbed \TeX
+
+**BTW**:
+
+Markdown grammer is poor.
+To realize a little advanced, we need \TeX.
+
+1. \TeX can be embbed in `mkd`
+    - which are never changed by `pandoc`
+1. All inner of a \TeX are judged as \TeX
+
+    - This means: cannot write `mkd` in \TeX
+
+## Example - twocolumns
+
+Markdown has no grammer about columns.
+
+Very easy in \TeX:
+
+```tex
+\begin{columns}
+  \column{.5\textwidth}
+    Left column
+  \column{.5\textwidth}
+    Right column
+\end{columns}
+```
+
+## Example - twocolumns
+
+Any `mkd` code **cannot** be emmbed in \TeX code.
+
+```tex
+\begin{columns}
+  \column{.5\textwidth}
+    [[MARKDOWN]]
+  \column{.5\textwidth}
+    Right column
+\end{columns}
+```
+
+\begin{columns}
+  \column{.5\textwidth}
+    Left column
+    *alert* **bold**
+  \column{.5\textwidth}
+    Right column
+\end{columns}
 

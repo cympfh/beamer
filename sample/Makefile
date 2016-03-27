@@ -24,4 +24,4 @@ default.pdf: sample.md
 .PHONY: clean
 
 clean:
-	rm tmp.*
+	rm -f *.pdf tmp.*
