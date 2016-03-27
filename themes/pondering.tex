@@ -1,6 +1,4 @@
 \documentclass[professionalfont, 12pt, dvipdfmx, default, cjk]{beamer}
-% \usetheme{Antibes}
-% \usecolortheme{beaver}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -15,9 +13,11 @@
 \setbeamercovered{dynamic} % slightly displaying not highlight
 
 % font
+\usepackage{mathpazo} % \rmdefault is defined
+\renewcommand{\sfdefault}{pag} % pag phv
+\renewcommand{\ttdefault}{pcr}
 \renewcommand{\kanjifamilydefault}{\gtdefault}
 \mathversion{bold}
-\usepackage{mathpazo}
 
 \makeatletter
 \def\Hline{%
@@ -31,8 +31,8 @@
 % taken from pickton on Adobe Kuler:
 % https://kuler.adobe.com/Some-Kind-Of-Ponde-color-theme-3837185/
 \definecolor{PondeRed}{RGB}{230,37,52}
+\definecolor{PondePink}{RGB}{250,74,100}
 \definecolor{PondeWine}{RGB}{230,3,5}
-\definecolor{PondePink}{RGB}{230,64,104}
 \definecolor{PondeBlack}{RGB}{43,40,40}
 \definecolor{PondeBlue}{RGB}{22,190,207}
 \definecolor{PondeWhite}{RGB}{255,255,243}
@@ -84,14 +84,16 @@
 
     % draw title page as background
     \ifnum\thepage=1\relax
-      \fill[color=PondeRed] (0, \paperheight-8mm) rectangle(\paperwidth,\paperheight);
-      \fill[color=PondeBlack] (0, \paperheight-4mm) rectangle(\paperwidth,\paperheight);
-      \node[anchor=south,text width=\paperwidth-1cm,inner xsep=0.5cm] at (0.5\paperwidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
-      \node[anchor=west,inner xsep=0.5cm] at (0,2cm) {\color{PondeBlack}\LARGE\insertauthor};
-      \node[anchor=south east] at(\paperwidth,0cm) {\color{PondeGray}\tiny\insertdate};
-    % \else
-    %   \node[opacity=0.8, anchor=south east] at (0.95\paperwidth, -0.03\paperheight) {
-    %     \includegraphics[width=0.15\paperwidth,bb=0 0 348 476]{../../bin/img/azusa.png}};
+      % triangles
+      \node[anchor=north west] at (-0.4cm, 1.0\paperheight+0.2cm) {%
+        \tikz\draw[fill=PondeRed!60!PondeBlack,draw=none] (0cm,0cm)--(0cm,3cm)--(20cm,3cm)--cycle;
+      };
+      \node[anchor=north west] at (-0.4cm, 1.0\paperheight+0.2cm) {%
+        \tikz\draw[fill=PondeRed,draw=none] (0cm,2.5cm)--(0cm,3cm)--(20cm,3cm)--(20cm,0cm)--cycle;
+      };
+      \node[anchor=south,text width=\paperwidth-1cm] at (0.5\paperwidth,4cm) {\color{PondeRed}\Huge\textbf{\inserttitle}};
+      \node[anchor=west] at (0.5cm,2cm) {\color{PondeBlack}\LARGE\insertauthor};
+      \node[anchor=south east] at(\paperwidth,0cm) {\color{PondeGray}\small\insertdate};
     \fi
   \end{tikzpicture}
 }
@@ -131,11 +133,10 @@
 
   \ifnum\thepage>1\relax
     \begin{tikzpicture}
-      \useasboundingbox (-2.2mm,-2.2mm) rectangle (2.2mm,2.2mm);
-      \fill[fill=PondeRed!20] (0,0) circle (2.2mm);
-      \fill[fill=PondeRed]
-      (0,0) -- (90:2.2mm) arc (90:90-\the\p/\the\q*360:2.2mm) -- cycle;
-      \fill[fill=white] (0,0) circle [x radius=1.8mm,y radius=1.8mm];
+      \useasboundingbox (-2.5mm,-2.5mm) rectangle (2.5mm,2.5mm);
+      \fill[fill=PondePink!30] (0,0) circle (2.5mm);
+      \fill[fill=PondeRed] (0,0) -- (90:2.5mm) arc (90:90-\the\p/\the\q*360:2.5mm) -- cycle;
+      \fill[fill=PondeWhite] (0,0) circle [x radius=1.8mm,y radius=1.8mm];
       \node[color=PondeRed,font=\tiny] at (0,0) {\the\p};
     \end{tikzpicture}
   \fi
