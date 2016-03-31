@@ -1,4 +1,4 @@
-\documentclass[professionalfont, 12pt, dvipdfmx, default, cjk]{beamer}
+\documentclass[professionalfont, $if(fontsize)$$fontsize$,$endif$ dvipdfmx, default, cjk]{beamer}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -136,8 +136,8 @@
       \useasboundingbox (-2.5mm,-2.5mm) rectangle (2.5mm,2.5mm);
       \fill[fill=PondePink!30] (0,0) circle (2.5mm);
       \fill[fill=PondeRed] (0,0) -- (90:2.5mm) arc (90:90-\the\p/\the\q*360:2.5mm) -- cycle;
-      \fill[fill=PondeWhite] (0,0) circle [x radius=1.8mm,y radius=1.8mm];
-      \node[color=PondeRed,font=\tiny] at (0,0) {\the\p};
+      \fill[fill=PondeWhite] (0,0) circle [x radius=2.0mm,y radius=2.0mm];
+      \node[color=PondeRed] at (0,0) {\fontsize{7pt}{0}\selectfont\the\p};
     \end{tikzpicture}
   \fi
 }
