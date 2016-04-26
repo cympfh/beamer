@@ -7,6 +7,13 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 
+% macro
+\def\BeginColumn#1{\begin{columns}\column{#1\textwidth}}
+\def\Column#1{\column{#1\textwidth}}
+\def\EndColumn{\end{columns}}
+\providecommand{\tightlist}{%
+    \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 % define colours
 % taken from pickton on Adobe Kuler:
 % https://kuler.adobe.com/Some-Kind-Of-Execushares-color-theme-3837185/

@@ -146,36 +146,31 @@ To realize a little advanced, we need \TeX.
 ## Example - twocolumns
 
 Markdown has no grammer about columns.
+My template defined special syntax (\TeX macros) for columns.
 
-Very easy in \TeX:
+\BeginColumn{.4}
+
+```tex
+\BeginColumn{.6}
+  Left column
+\Column
+  Right column
+\EndColumn{.4}
+```
+
+\Column{.1}
+
+generates
+
+\Column{.5}
 
 ```tex
 \begin{columns}
-  \column{.5\textwidth}
+  \column{.6\textwidth}
     Left column
-  \column{.5\textwidth}
+  \column{.4\textwidth}
     Right column
 \end{columns}
 ```
 
-## Example - twocolumns
-
-Any `mkd` code **cannot** be emmbed in \TeX code.
-
-```tex
-\begin{columns}
-  \column{.5\textwidth}
-    [[MARKDOWN]]
-  \column{.5\textwidth}
-    Right column
-\end{columns}
-```
-
-\begin{columns}
-  \column{.5\textwidth}
-    Left column
-    *alert* **bold**
-  \column{.5\textwidth}
-    Right column
-\end{columns}
-
+\EndColumn
