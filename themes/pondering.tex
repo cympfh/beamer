@@ -1,4 +1,8 @@
-\documentclass[professionalfont, $if(fontsize)$$fontsize$,$endif$ dvipdfmx, default, cjk]{beamer}
+\documentclass[
+    $if(aspectratio)$
+    aspectratio=$aspectratio$,
+    $endif$
+    professionalfont, $if(fontsize)$$fontsize$,$endif$ dvipdfmx, default, cjk]{beamer}
 
 \usepackage{tikz}
 \usetikzlibrary{calc}
