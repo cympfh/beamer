@@ -1,0 +1,257 @@
+\documentclass[
+    $if(aspectratio)$
+    aspectratio=$aspectratio$,
+    $else$
+    aspectratio=169,
+    $endif$
+    professionalfont, $if(fontsize)$$fontsize$,$endif$ dvipdfmx, default, cjk]{beamer}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[none]{hyphenat}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, cite, url}
+\usepackage{etex}
+\usepackage{longtable}
+
+\setbeamercovered{dynamic} % slightly displaying not highlight
+
+% font
+\usepackage{mathpazo} % \rmdefault is defined
+\renewcommand{\sfdefault}{pag} % pag phv
+\renewcommand{\ttdefault}{pcr}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\mathversion{bold}
+
+\makeatletter
+\def\Hline{%
+  \noalign{\ifnum0=`}\fi\hrule \@height 0.8pt \futurelet
+\reserved@a\@xhline}
+\makeatother
+
+\def\emph#1{\alert{#1}}
+
+% define colours
+\definecolor{White}{RGB}{241,242,219}
+\definecolor{Black}{RGB}{66,66,66}
+\definecolor{Gray}{RGB}{211,206,170}
+\definecolor{Red}{RGB}{142,0,28}
+\definecolor{Blue}{RGB}{22,190,207}
+
+% set colours
+\setbeamercolor{structure}{fg=Black}
+\setbeamercolor{itemize item}{fg=Black}
+\setbeamercolor{enumerate item}{fg=Black}
+\setbeamercolor{alerted text}{fg=Red}
+\setbeamercolor{section in toc}{fg=Black}
+
+% set fonts
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\small}
+
+% item bullet
+\setbeamertemplate{itemize item}{
+  \tikz{
+    \draw[fill=Red,draw=none] (0, 0) rectangle(0.1, 0.1);
+    \draw[fill=Red,draw=none] (0.1, 0.1) rectangle(0.2, 0.2);
+    \draw[fill=Red,draw=none] (0, 0.2) rectangle(0.1, 0.3);
+  }
+}
+\setbeamertemplate{itemize subitem}{
+  \tikz{
+    \draw[fill=Red,draw=none] (0, 0) rectangle(0.075, 0.075);
+    \draw[fill=Red,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
+    \draw[fill=Red,draw=none] (0, 0.15) rectangle(0.075, 0.225);
+  }
+}
+\setbeamertemplate{itemize subsubitem}{
+  \tikz{
+    \draw[fill=Gray,draw=none] (0, 0) rectangle(0.075, 0.075);
+    \draw[fill=Gray,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
+    \draw[fill=Gray,draw=none] (0, 0.15) rectangle(0.075, 0.225);
+  }
+}
+
+% title and background
+\setbeamertemplate{title page}{}
+\setbeamertemplate{background}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle (\the\paperwidth,\the\paperheight);
+
+    % background (solid=White)
+    \fill[color=White] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+
+    % draw title page as background
+    \ifnum\thepage=1\relax
+      \node[anchor=west,text width=\paperwidth-1cm]
+      at (5mm, \paperheight - 4cm)
+      {\color{Black}\Huge\textbf{\inserttitle}\vspace{1mm}\hrule};
+      \node[anchor=west] at (5mm, \paperheight - 6cm)
+      {\color{Black}\Large\insertauthor};
+      \node[anchor=west] at (5mm, \paperheight - 7cm)
+      {\color{Black}\large\insertdate};
+    \fi
+  \end{tikzpicture}
+}
+
+% header
+\makeatletter
+\setbeamertemplate{headline}{}
+\setbeamercolor{frametitle}{fg=White,bg=Black}
+\setbeamertemplate{frametitle}
+{
+  \vspace*{-1mm}
+  \begin{beamercolorbox}[sep=1mm,wd=1.01\paperwidth]{frametitle}
+    \hfill \tiny \insertsectionhead \par%
+      \hspace{2mm}\Large \strut\insertframetitle\strut
+  \end{beamercolorbox}
+}
+
+\makeatother
+
+% footer is progress bar
+\makeatother
+\setbeamertemplate{footline}
+{
+  \dimen0=1.1\paperwidth
+  \newcount\p
+  \newcount\q
+  \p=\insertframenumber
+  \q=\inserttotalframenumber
+  \advance\p by -1
+  \advance\q by -1
+  \ifnum\q=0
+    \q=1
+  \fi
+  \multiply\dimen0 by \the\p
+  \divide\dimen0 by \the \q
+  \edef\progressbarwidth{\the\dimen0}
+  \leavevmode%
+  \setbeamercolor{progress bar}{bg=Red}
+  \begin{beamercolorbox}[wd=1.1\paperwidth,ht=0.05ex,dp=0.5ex]{progress outer}
+    \begin{beamercolorbox}[wd=\progressbarwidth,ht=0.05ex,dp=1.5ex]{progress bar}
+    \end{beamercolorbox}%
+  \end{beamercolorbox}%
+}
+\makeatletter
+
+% page number
+\setbeamertemplate{navigation symbols}{}
+
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(fancy-enums)$
+\usepackage{enumerate}
+$endif$
+$if(tables)$
+\usepackage{ctable}
+\usepackage{float} % provides the H option for float placement
+$endif$
+% Comment these out if you don't want a slide with just the
+% part/section/subsection/subsubsection title:
+% \AtBeginPart{\frame{\partpage}}
+% \AtBeginSection{\frame{\sectionpage}}
+% \AtBeginSubsection{\frame{\subsectionpage}}
+% \AtBeginSubsubsection{\frame{\subsubsectionpage}}
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+$if(numbersections)$
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(lang)$
+\usepackage[$lang$]{babel}
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(title)$
+\title{$title$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(date)$
+\date{$date$}
+$endif$
+
+\InputIfFileExists{macro.tex}{}{}
+% macro
+\def\BeginColumn#1{\begin{columns}\column{#1\textwidth}}
+\def\Column#1{\column{#1\textwidth}}
+\def\EndColumn{\end{columns}}
+\providecommand{\tightlist}{%
+    \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+$if(title)$
+\frame{\titlepage}
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+\begin{frame}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+$endif$
+$body$
+
+$if(natbib)$
+$if(biblio-files)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$biblio-files$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
