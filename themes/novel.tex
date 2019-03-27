@@ -104,8 +104,8 @@
 \setbeamertemplate{frametitle}
 {
   \vspace*{-1mm}
-  \begin{beamercolorbox}[sep=1mm,wd=1.01\paperwidth]{frametitle}
-    \hfill \tiny \insertsectionhead \par%
+  \begin{beamercolorbox}[sep=1mm,wd=1.0\paperwidth]{frametitle}
+    \hfill \footnotesize \insertsectionhead \par%
       \hspace{2mm}\Large \strut\insertframetitle\strut
   \end{beamercolorbox}
 }
@@ -116,7 +116,7 @@
 \makeatother
 \setbeamertemplate{footline}
 {
-  \dimen0=1.1\paperwidth
+  \dimen0=1.0\paperwidth
   \newcount\p
   \newcount\q
   \p=\insertframenumber
@@ -126,12 +126,12 @@
   \ifnum\q=0
     \q=1
   \fi
-  \multiply\dimen0 by \the\p
   \divide\dimen0 by \the \q
+  \multiply\dimen0 by \the\p
   \edef\progressbarwidth{\the\dimen0}
   \leavevmode%
   \setbeamercolor{progress bar}{bg=Black}
-  \begin{beamercolorbox}[wd=1.1\paperwidth,ht=0.05ex,dp=0.5ex]{progress outer}
+  \begin{beamercolorbox}[wd=1.0\paperwidth,ht=0.05ex,dp=0.5ex]{progress outer}
     \begin{beamercolorbox}[wd=\progressbarwidth,ht=0.05ex,dp=1.5ex]{progress bar}
     \end{beamercolorbox}%
   \end{beamercolorbox}%
